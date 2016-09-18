@@ -1,0 +1,105 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>C4 by wangfakang</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1 class="header">C4</h1>
+        <p class="header">do not use the add or sub and finish two numbers add</p>
+
+        <ul>
+          <li class="download"><a class="buttons" href="https://github.com/wangfakang/c4/zipball/master">Download ZIP</a></li>
+          <li class="download"><a class="buttons" href="https://github.com/wangfakang/c4/tarball/master">Download TAR</a></li>
+          <li><a class="buttons github" href="https://github.com/wangfakang/c4">View On GitHub</a></li>
+        </ul>
+
+        <p class="header">This project is maintained by <a class="header name" href="https://github.com/wangfakang">wangfakang</a></p>
+
+
+      </header>
+      <section>
+        <h1>
+<a id="求两个数的和不允许使用加法和减法" class="anchor" href="#%E6%B1%82%E4%B8%A4%E4%B8%AA%E6%95%B0%E7%9A%84%E5%92%8C%E4%B8%8D%E5%85%81%E8%AE%B8%E4%BD%BF%E7%94%A8%E5%8A%A0%E6%B3%95%E5%92%8C%E5%87%8F%E6%B3%95" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>求两个数的和，不允许使用加法和减法</h1>
+
+<p>当看到这个题目的时候，大概就有两种方法来实现；<br>
+一种是只要是和算术相关的操作都可以使用位操作来进行变相实现。<br>
+  最先想到的就是位操作来解决，如下：     </p>
+
+<div class="highlight highlight-source-c"><pre><span class="pl-k">int</span> <span class="pl-en">add1</span>(<span class="pl-k">int</span> x, <span class="pl-k">int</span> y) 
+{
+    <span class="pl-k">if</span> (y == <span class="pl-c1">0</span>) {
+        <span class="pl-k">return</span> x;
+    }
+
+    <span class="pl-k">return</span> <span class="pl-c1">add1</span>(x ^ y, (x &amp; y) &lt;&lt; <span class="pl-c1">1</span>);
+
+}</pre></div>
+
+<p>把加法拆成两部分来操作，一部分是做简单的加法，另一部分是做进位操作；
+其中x^y是简单的加，无进位。x&amp;y是求进位，(x &amp; y) &lt;&lt; 1表示进位的数左移一
+位和之前无进位的数做求和；    </p>
+
+<p>另一种是利用某种机制来做间接的调用加减法,利用a[i] 等价于*(a+i)机制：</p>
+
+<div class="highlight highlight-source-c"><pre><span class="pl-k">long</span> <span class="pl-en">add2</span>(<span class="pl-k">int</span> x, <span class="pl-k">int</span> y)
+{
+    <span class="pl-k">return</span> (<span class="pl-k">long</span>)(&amp;((<span class="pl-k">char</span>*)x)[y]);
+}
+
+</pre></div>
+
+<p>首先我们知道，a[i]是和<em>(a+i)是等价的然而加i会偏移多少，这个取决于a的类型，如果a
+是char型的则加1就是加1字节；这个地方就利用这个机制，(char</em>)x把整数x强转为char类型的
+指针想当与数组名首地址a，然后((char<em>)x)[y]这个就等价于</em>（x+y）取对应空间里面的值，
+这个时候我们并不想要这个地址里存储的值，而是想要这个值对应的地址，所以&amp;((char<em>)x)[y]
+进行和</em>符合抵消，最后把这个地址转换为long类型；
+  注意：指针在64位操作系统里面是8字节。</p>
+
+<h1>
+<a id="欢迎一起交流学习-" class="anchor" href="#%E6%AC%A2%E8%BF%8E%E4%B8%80%E8%B5%B7%E4%BA%A4%E6%B5%81%E5%AD%A6%E4%B9%A0-" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>欢迎一起交流学习 </h1>
+
+<p>在使用中有任何问题，欢迎反馈给我，可以用以下联系方式跟我交流</p>
+
+<ul>
+<li>邮件(1031379296#qq.com, 把#换成@)</li>
+<li>QQ: 1031379296</li>
+<li>weibo: <a href="http://weibo.com/u/2786211992/home">@王发康</a>
+</li>
+</ul>
+
+<h1>
+<a id="thx" class="anchor" href="#thx" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Thx</h1>
+
+<ul>
+<li>chunshengsterATgmail.com</li>
+</ul>
+
+<h1>
+<a id="author" class="anchor" href="#author" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Author</h1>
+
+<ul>
+<li>Linux\nginx\golang\c\c++爱好者</li>
+<li>欢迎一起交流  一起学习# </li>
+<li>Others say good and Others good</li>
+</ul>
+      </section>
+      <footer>
+        <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+		
+  </body>
+</html>
